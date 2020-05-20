@@ -4,7 +4,6 @@
             <div *ngIf="!isCartEmpty">
             
             <div class="card-body" *ngFor="let cart of cartItems">
-                    <!-- PRODUCT -->
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-2 text-center">
                                 <img class="img-responsive" src="{{cart.photo}}" alt="prewiew" width="120" height="80">
@@ -20,29 +19,23 @@
                             <div class="col-4 col-sm-4 col-md-4">
                                 <div class="quantity">
                                     <input type="button" (click)="addToCart(cart)" value="+" class="plus">
-                                    <input type="number" class="qty" size="4">
+                                    <input type="text" class="qty" size="4" [(ngModel)]=cart.count> 
                                     <input type="button" value="-" class="minus" (click)="removeFromCart(cart)">
                                 </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 text-right">
-                                <button type="button" class="btn btn-outline-danger btn-xs">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <!-- END PRODUCT -->
               
             </div>
 
             <div class="card-footer" >
                 <div class="row">
                     <div class="col">
-                            <a href="" class="btn btn-success pull-right">Checkout</a>
+                            <!-- <a href="" class="btn btn-success pull-right">Checkout</a> -->
                     </div>
 
-                    <div class="col" *ngFor="let cart of cartItems">
+                    <div class="col">
                             Total price: <b>₹ {{getCartTotal()}}</b>
                     </div>
                 </div>
@@ -50,7 +43,7 @@
         </div>
 
             <div class="card shopping-cart" *ngIf="isCartEmpty">
-                    <p>Your cart is empty</p>
+                    <p class="p">Your cart is empty</p>
             </div>
         </div>
 </div>

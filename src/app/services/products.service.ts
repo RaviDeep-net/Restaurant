@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Product } from '../entities/product.entity';
+import { HeaderComponent } from '../components/header/header.component';
 
 @Injectable({
   providedIn: 'root'
@@ -8,23 +9,24 @@ import { Product } from '../entities/product.entity';
 export class ProductsService {
 
   cartDataItems = new BehaviorSubject<Array<Product>>([]);
+  ifItemExist=new BehaviorSubject<boolean>(false);
   cartItems:Array<Product>=[];
-  constructor() { }
+  
+  constructor( private _headerComponent:HeaderComponent) { }
 
   addtoCart(item:Product){
-    console.log(this.checkIfItemExists(item));
     if(this.checkIfItemExists(item)==true){
        item.count++;
-       console.log(item.count);
-       console.log('Item exits');
+       this._headerComponent.cartTotalItems.next(2);
     }
     else{
       item.count=1;
-      console.log('Item not exits');
+      item.addedToCart=true;
       this.cartItems.push(item);
     }
-    this.cartDataItems.next(this.cartItems);
+    this._headerComponent.getCartCount();
     console.log(this.cartItems);
+    this.cartDataItems.next(this.cartItems);
   }
 
   removeFromCart(cart:Product){
@@ -33,21 +35,25 @@ export class ProductsService {
       console.log(cart.count);
     }
     else{
+      cart.addedToCart=false;
       this.cartItems.pop();
+      this._headerComponent.cartTotalItems.next(cart.count);
     }
-    //  console.log(cart);
-    //this.cartDataItems.next(this.cartItems);
+    this.ifItemExist.next(false);
   }
 
    checkIfItemExists(item:Product):boolean{
      let returnType:boolean;
-      if(this.cartItems.length>0){
+     let cartItems=this.cartDataItems.getValue();
+     if(cartItems.length>0){
         
-        this.cartItems.some(element => {
+        cartItems.some(element => {
         if(item.id==element.id){
           returnType=true;
+          console.log("checkIfItemExists :"+true)
         }
         else{
+          console.log("checkIfItemExists :"+false)
           returnType= false;
         }
         });
@@ -56,7 +62,6 @@ export class ProductsService {
      else{
       return false;
      }
-     
      
   }
 

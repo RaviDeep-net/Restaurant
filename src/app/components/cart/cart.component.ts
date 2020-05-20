@@ -11,6 +11,7 @@ export class CartComponent implements OnInit {
 
   isCartEmpty:boolean=true;
   cartItems:Product [];
+  itemCount:number=1;
   constructor(private _productService:ProductsService) { }
   
   ngOnInit(): void {
@@ -26,7 +27,8 @@ export class CartComponent implements OnInit {
     });
   }
 
-  addToCart(item:any){
+  addToCart(item:Product){
+    console.log(item);
     this._productService.addtoCart(item);
   }
 
@@ -38,11 +40,10 @@ export class CartComponent implements OnInit {
     let totalPrice = 0;
     this._productService.cartDataItems.subscribe(items => {
     items.map(item => {
-      totalPrice = item.price * item.count;
+      totalPrice += item.price * item.count;
     });
-    console.log(totalPrice);
-    return totalPrice;
   });
+  return totalPrice;
   }
 
 }

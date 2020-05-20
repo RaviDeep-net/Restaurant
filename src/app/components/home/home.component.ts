@@ -10,14 +10,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
-  itemLists:object;
+  itemList:object;
   cartItems:Array<Product>=[];
   is_added:boolean;
-  
+  isExist:boolean;
 
   constructor(private _productService:ProductsService) { }
-
-
   
   ngOnInit(): void {
     this.getitemList();
@@ -25,12 +23,15 @@ export class HomeComponent implements OnInit {
 
   getitemList(){
     this._productService.getItemList().subscribe(data=>{
-      this.itemLists=data.itemList;
+      this.itemList=data.itemList;
     });;
   }
 
-  addToCart(item:any){
+  addToCart(item:Product){
     this._productService.addtoCart(item);
   }
 
+  removeFromCart(item:any){
+    this._productService.removeFromCart(item);
+  }
 }

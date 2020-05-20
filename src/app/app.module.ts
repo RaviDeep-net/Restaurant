@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SumPipePipe } from './pipe/sum-pipe.pipe';
+import{FormsModule} from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -20,9 +21,10 @@ import { SumPipePipe } from './pipe/sum-pipe.pipe';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [HeaderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

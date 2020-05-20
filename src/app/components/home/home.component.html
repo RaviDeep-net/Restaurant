@@ -2,15 +2,15 @@
 <br>
    <div class="container">
     <div class="row">
-      <div class="col-sm"  *ngFor="let item of itemLists">
+      <div class="col-sm"  *ngFor="let item of itemList">
         <h5 class="card-title">{{item.name}}</h5>
 
         <img class="card-img-top" style="height:120px" src="{{item.photo}}" alt="Card image cap">
         <div class="card-body">
           <p class="card-text">Price : ₹{{item.price}}</p>
-          <!-- <a href="#" class="btn btn-primary">Add to Cart</a> -->
-          <button class="btn btn-primary"  (click)="addToCart(item)">Add to Cart</button>
+          <button class="btn btn-primary" *ngIf="!item.addedToCart" (click)="addToCart(item)">Add to Cart</button>
+          <button class="btn btn-primary" *ngIf="item.addedToCart" (click)="removeFromCart(item)">Remove From Cart</button>
         </div>
       </div>
     </div>
-  </div>
+  </div> 

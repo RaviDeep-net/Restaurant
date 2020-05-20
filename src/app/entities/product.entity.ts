@@ -4,4 +4,6 @@ export class Product{
     price:number;
     photo:string;
     count ?:number;
+    addedToCart?:boolean;
+    // cartItemCount?:number;
 }

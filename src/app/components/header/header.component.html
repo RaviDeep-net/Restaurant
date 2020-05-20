@@ -7,8 +7,14 @@
           <a class="nav-link"routerLink="/home">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="float: right" routerLink="/cart">Cart</a>
+          <a class="nav-link" style="float: right" routerLink="/cart">Cart 
+            <label>
+              Count {{cartItemCount}}
+          </label> </a>
         </li>
+        <!-- <li class="nav-item">
+          <label class="nav-link">Cart Count  </label>
+        </li> -->
       </ul>
     </div>
   </nav>
