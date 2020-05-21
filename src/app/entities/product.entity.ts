@@ -5,5 +5,5 @@ export class Product{
     photo:string;
     count ?:number;
     addedToCart?:boolean;
-    // cartItemCount?:number;
+    cartItemCount:number=0;
 }

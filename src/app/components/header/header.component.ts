@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-header',
@@ -8,16 +9,19 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _productService:ProductsService) { }
 
   cartItemCount:number;
-  cartTotalItems=new BehaviorSubject<number>(0);
+  
 
   ngOnInit(): void {
-     this.getCartCount();
+     this._productService.cartTotalItems.subscribe(data=>{
+      console.log(data);
+      this.cartItemCount= data;
+     });
   }
   
   getCartCount(){
-    this.cartItemCount= this.cartTotalItems.getValue();
+    
   }
 }

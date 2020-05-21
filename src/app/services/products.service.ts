@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Product } from '../entities/product.entity';
-import { HeaderComponent } from '../components/header/header.component';
+// import { HeaderComponent } from '../components/header/header.component';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +11,28 @@ export class ProductsService {
   cartDataItems = new BehaviorSubject<Array<Product>>([]);
   ifItemExist=new BehaviorSubject<boolean>(false);
   cartItems:Array<Product>=[];
+
+  cartTotalItems=new BehaviorSubject<number>(0);
   
-  constructor( private _headerComponent:HeaderComponent) { }
+  i=new BehaviorSubject<number>(1);
+
+  itemDemo:number=0;
+
+  constructor() { }
 
   addtoCart(item:Product){
     if(this.checkIfItemExists(item)==true){
        item.count++;
-       this._headerComponent.cartTotalItems.next(2);
     }
     else{
+      console.log(item.cartItemCount);
+
       item.count=1;
       item.addedToCart=true;
       this.cartItems.push(item);
+      this.itemDemo++;
+      this.cartTotalItems.next(this.itemDemo);//For increasing in cart number
     }
-    this._headerComponent.getCartCount();
-    console.log(this.cartItems);
     this.cartDataItems.next(this.cartItems);
   }
 
@@ -37,7 +44,7 @@ export class ProductsService {
     else{
       cart.addedToCart=false;
       this.cartItems.pop();
-      this._headerComponent.cartTotalItems.next(cart.count);
+      // this.cartTotalItems.next(cart.count);
     }
     this.ifItemExist.next(false);
   }
@@ -50,14 +57,12 @@ export class ProductsService {
         cartItems.some(element => {
         if(item.id==element.id){
           returnType=true;
-          console.log("checkIfItemExists :"+true)
         }
         else{
-          console.log("checkIfItemExists :"+false)
           returnType= false;
         }
         });
-        return  returnType;
+        return returnType;
       }
      else{
       return false;
