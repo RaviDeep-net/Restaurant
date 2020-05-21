@@ -13,10 +13,7 @@ export class ProductsService {
   cartItems:Array<Product>=[];
 
   cartTotalItems=new BehaviorSubject<number>(0);
-  
-  i=new BehaviorSubject<number>(1);
-
-  itemDemo:number=0;
+  cartCount:number=0;
 
   constructor() { }
 
@@ -25,13 +22,11 @@ export class ProductsService {
        item.count++;
     }
     else{
-      console.log(item.cartItemCount);
-
       item.count=1;
       item.addedToCart=true;
       this.cartItems.push(item);
-      this.itemDemo++;
-      this.cartTotalItems.next(this.itemDemo);//For increasing in cart number
+      this.cartCount++;
+      this.cartTotalItems.next(this.cartCount);//For increasing in cart number
     }
     this.cartDataItems.next(this.cartItems);
   }
@@ -44,7 +39,8 @@ export class ProductsService {
     else{
       cart.addedToCart=false;
       this.cartItems.pop();
-      // this.cartTotalItems.next(cart.count);
+      this.cartCount--;
+      this.cartTotalItems.next(this.cartCount);//For decreasing in cart number
     }
     this.ifItemExist.next(false);
   }
